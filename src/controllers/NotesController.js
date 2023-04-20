@@ -11,6 +11,8 @@ class NotesController{
             }],
     
         )
+      
+       if(links!=""){
         const linksInsert = links.map(links=>{
             return{
                 note_id,
@@ -18,16 +20,20 @@ class NotesController{
             }
         })
         await knex("links").insert(linksInsert)
-        const TagsInsert = tags.map(name=>{
-            return{
-                note_id,
-                name,
-                user_id
-            }
-        })
+       }
+        if(tags!=""){
+            const TagsInsert = tags.map(name=>{
+                return{
+                    note_id,
+                    name,
+                    user_id
+                }
+            })
         await knex("tags").insert(TagsInsert)
+        }
+           
+        return res.send('nota criada')
 
-        return res.send("Nota criada")
     }
     async show(req,res){
         const {id}=req.params
